@@ -7,9 +7,9 @@
 
     <Button
         android:id="@+id/button_Fragment1"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Fragment 1"
+        android:text="Bible Verse"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,13 +18,36 @@
 
     <Button
         android:id="@+id/button_Fragment2"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Fragment 2"
+        android:text="Worship Song"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_Fragment1"
+        app:layout_constraintBottom_toTopOf="@+id/button_Fragment3"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/button_Fragment3"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Prayer Journal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_Fragment2"
+        app:layout_constraintBottom_toTopOf="@+id/button_Fragment4"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/button_Fragment4"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Church Locator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_Fragment3"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
@@ -36,6 +59,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_Fragment1"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.992" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

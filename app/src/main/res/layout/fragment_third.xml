@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".ThirdFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Second Fragment"
+        android:text="Third Fragment"
         android:textSize="30sp"
-        android:id="@+id/textViewSecondFragment" />
+        android:id="@+id/textViewThirdFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
