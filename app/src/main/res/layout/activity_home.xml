@@ -24,11 +24,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_Fragment1"
-        app:layout_constraintBottom_toTopOf="@+id/button_Fragment3"
+        app:layout_constraintBottom_toTopOf="@+id/button_prayerJournal"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
-        android:id="@+id/button_Fragment3"
+        android:id="@+id/button_prayerJournal"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:text="Prayer Journal"
@@ -45,13 +45,12 @@
         android:text="Church Locator"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Fragment3"
+        app:layout_constraintTop_toBottomOf="@+id/button_prayerJournal"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="com.example.faithportal.FirstFragment"
         android:layout_width="410dp"
         android:layout_height="735dp"
         app:layout_constraintBottom_toBottomOf="parent"
