@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.faithportal.Model.PrayerEntry
 import com.example.faithportal.Model.ViewModel.PrayerJournalViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -26,6 +29,7 @@ class PrayerJournalFragment : Fragment() {
     private lateinit var buttonAddPrayer: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PrayerEntryAdapter
+    private var prayerIdCounter = 2
 
     companion object {
         private const val TAG = "ThirdFragment"
@@ -96,7 +100,8 @@ class PrayerJournalFragment : Fragment() {
         buttonAddPrayer.setOnClickListener {
             val prayerContent = editTextPrayer.text.toString()
             if (prayerContent.isNotEmpty()) {
-                val prayerEntry = PrayerEntry("10/14/2024", prayerContent, 1)
+                val currentDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(Date())
+                val prayerEntry = PrayerEntry(currentDate, prayerContent, prayerIdCounter++)
                 prayerJournalViewModel.insert(prayerEntry)
                 editTextPrayer.setText("") // Clear input
             }
