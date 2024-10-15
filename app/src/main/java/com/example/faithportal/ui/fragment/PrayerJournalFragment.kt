@@ -1,4 +1,4 @@
-package com.example.faithportal
+package com.example.faithportal.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.faithportal.Model.PrayerEntry
 import com.example.faithportal.Model.ViewModel.PrayerJournalViewModel
+import com.example.faithportal.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,6 +31,7 @@ class PrayerJournalFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PrayerEntryAdapter
     private var prayerIdCounter = 2
+
 
     companion object {
         private const val TAG = "ThirdFragment"
@@ -78,7 +80,9 @@ class PrayerJournalFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_prayer_journal, container, false)
 

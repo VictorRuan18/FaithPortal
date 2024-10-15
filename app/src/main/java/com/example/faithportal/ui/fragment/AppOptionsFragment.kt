@@ -1,4 +1,4 @@
-package com.example.faithportal
+package com.example.faithportal.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import com.example.faithportal.FirstFragment
+import com.example.faithportal.FourthFragment
+import com.example.faithportal.R
+import com.example.faithportal.SecondFragment
+import com.example.faithportal.ui.activity.PrayerJournalActivity
 
 class AppOptionsFragment : Fragment(), View.OnClickListener {
 
@@ -21,7 +26,7 @@ class AppOptionsFragment : Fragment(), View.OnClickListener {
         btnNewGame.setOnClickListener(this)
         val btnAudio: Button = v.findViewById(R.id.button_Fragment2)
         btnAudio.setOnClickListener(this)
-        val btnVideo: Button = v.findViewById(R.id.button_Fragment3)
+        val btnVideo: Button = v.findViewById(R.id.button_prayerJournal)
         btnVideo.setOnClickListener(this)
         val btnImage: Button = v.findViewById(R.id.button_Fragment4)
         btnImage.setOnClickListener(this)
@@ -44,10 +49,10 @@ class AppOptionsFragment : Fragment(), View.OnClickListener {
                     SecondFragment::class.java
                 )
             )
-            R.id.button_Fragment3 -> startActivity(
+            R.id.button_prayerJournal -> startActivity(
                 Intent(
                     activity.applicationContext,
-                    PrayerJournalFragment::class.java
+                    PrayerJournalActivity::class.java
                 )
             )
             R.id.button_Fragment4 -> startActivity(

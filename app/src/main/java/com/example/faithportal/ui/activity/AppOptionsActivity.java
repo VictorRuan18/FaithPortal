@@ -1,4 +1,4 @@
-package com.example.faithportal;
+package com.example.faithportal.ui.activity;
 
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.faithportal.ui.fragment.AppOptionsFragment;
+import com.example.faithportal.R;
 
 public class AppOptionsActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
