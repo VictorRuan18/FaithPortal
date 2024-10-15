@@ -10,9 +10,10 @@ public class PrayerEntry {
     private String date;
 
 
-   public PrayerEntry(String data, String content) {
+   public PrayerEntry(String date, String content, int id) {
         this.date = date;
         this.content = content;
+        this.id = id;
     }
 
     public String getContent() {

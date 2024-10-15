@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {PrayerEntry.class}, version = 1)
+@Database(entities = {PrayerEntry.class}, version = 1, exportSchema = false)
 public abstract class PrayerEntryDatabase extends RoomDatabase {
 
     private static PrayerEntryDatabase instance;
