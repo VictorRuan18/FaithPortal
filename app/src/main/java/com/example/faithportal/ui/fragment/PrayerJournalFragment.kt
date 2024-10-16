@@ -1,4 +1,5 @@
 package com.example.faithportal.ui.fragment
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,7 +32,6 @@ class PrayerJournalFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PrayerEntryAdapter
     private var prayerIdCounter = 2
-
 
     companion object {
         private const val TAG = "ThirdFragment"

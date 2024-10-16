@@ -12,7 +12,7 @@ import com.example.faithportal.ui.fragment.AppOptionsFragment;
 import com.example.faithportal.R;
 
 public class AppOptionsActivity extends AppCompatActivity {
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "AppOptionsActivity";
 
     protected Fragment createFragment() {
         return new AppOptionsFragment();
