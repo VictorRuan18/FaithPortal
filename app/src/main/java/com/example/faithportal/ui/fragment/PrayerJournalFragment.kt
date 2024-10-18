@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -91,10 +92,10 @@ class PrayerJournalFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view_prayers)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        adapter = PrayerEntryAdapter()
-        recyclerView.adapter = adapter
-
         prayerJournalViewModel = ViewModelProvider(this).get(PrayerJournalViewModel::class.java)
+
+        adapter = PrayerEntryAdapter(prayerJournalViewModel) // Pass the ViewModel to the adapter
+        recyclerView.adapter = adapter
 
         prayerJournalViewModel.allPrayerEntries.observe(viewLifecycleOwner, Observer { prayerEntries ->
             // Update RecyclerView
@@ -115,7 +116,7 @@ class PrayerJournalFragment : Fragment() {
     }
 }
 
-class PrayerEntryAdapter : RecyclerView.Adapter<PrayerEntryAdapter.PrayerEntryHolder>() {
+class PrayerEntryAdapter(private val prayerJournalViewModel: PrayerJournalViewModel) : RecyclerView.Adapter<PrayerEntryAdapter.PrayerEntryHolder>() {
 
     private var prayerEntries: List<PrayerEntry> = ArrayList()
 
@@ -129,6 +130,14 @@ class PrayerEntryAdapter : RecyclerView.Adapter<PrayerEntryAdapter.PrayerEntryHo
         val currentPrayerEntry = prayerEntries[position]
         holder.textViewPrayer.text = currentPrayerEntry.content
         holder.textViewDate.text = currentPrayerEntry.date
+
+        holder.buttonDeleteEntry.setOnClickListener {
+            prayerJournalViewModel.delete(currentPrayerEntry)
+        }
+
+        holder.buttonUpdateEntry.setOnClickListener {
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -143,6 +152,9 @@ class PrayerEntryAdapter : RecyclerView.Adapter<PrayerEntryAdapter.PrayerEntryHo
     inner class PrayerEntryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewPrayer: TextView = itemView.findViewById(R.id.text_view_prayer)
         val textViewDate: TextView = itemView.findViewById(R.id.text_view_date)
+
+        val buttonUpdateEntry: Button = itemView.findViewById(R.id.button_edit_entry)
+        val buttonDeleteEntry: Button = itemView.findViewById(R.id.button_delete_entry)
     }
 
 

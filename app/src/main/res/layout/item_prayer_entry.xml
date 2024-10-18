@@ -13,18 +13,31 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
+            android:id="@+id/text_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
             android:id="@+id/text_view_prayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Prayer content"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/text_view_date"
+        <Button
+            android:id="@+id/button_edit_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="12sp"
-            android:textColor="@android:color/darker_gray" />
+            android:text="Edit Entry" />
+
+        <Button
+            android:id="@+id/button_delete_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Entry" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
