@@ -9,10 +9,17 @@ public class PrayerEntry {
     private String content;
     private String date;
 
-
-   public PrayerEntry(String date, String content, int id) {
+    public PrayerEntry(String date, String content) {
         this.date = date;
         this.content = content;
+    }
+
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -24,15 +31,12 @@ public class PrayerEntry {
         return date;
     }
 
-   public int getId() {
-        return id;
-   }
-   public void setDate(String date)
-    {
-          this.date = date;
+    public void setDate(String date) {
+        this.date = date;
     }
-    public void setContent(String content)
-    {
-          this.content = content;
+
+    public void setContent(String content) {
+        this.content = content;
     }
+
 }

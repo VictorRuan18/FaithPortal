@@ -106,7 +106,7 @@ class PrayerJournalFragment : Fragment() {
             val prayerContent = editTextPrayer.text.toString()
             if (prayerContent.isNotEmpty()) {
                 val currentDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(Date())
-                val prayerEntry = PrayerEntry(currentDate, prayerContent, prayerIdCounter++)
+                val prayerEntry = PrayerEntry(currentDate, prayerContent)
                 prayerJournalViewModel.insert(prayerEntry)
                 editTextPrayer.setText("") // Clear input
             }
@@ -134,9 +134,26 @@ class PrayerEntryAdapter(private val prayerJournalViewModel: PrayerJournalViewMo
         holder.buttonDeleteEntry.setOnClickListener {
             prayerJournalViewModel.delete(currentPrayerEntry)
         }
-
         holder.buttonUpdateEntry.setOnClickListener {
+            var updateView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.update_prayer_entry, null)
+            var editTextUpdatePrayer = updateView.findViewById<EditText>(R.id.edit_text_update_prayer)
+            var buttonUpdate = updateView.findViewById<Button>(R.id.button_update_prayer)
+            editTextUpdatePrayer.setText(currentPrayerEntry.content)
 
+            val dialog = androidx.appcompat.app.AlertDialog.Builder(holder.itemView.context)
+                .setView(updateView)
+                .create()
+            buttonUpdate.setOnClickListener {
+                val updatedContent = editTextUpdatePrayer.text.toString()
+                if (updatedContent.isNotEmpty()) {
+                    val updatedPrayerEntry =
+                        PrayerEntry(currentPrayerEntry.date, updatedContent)
+                    updatedPrayerEntry.id = currentPrayerEntry.id
+                    prayerJournalViewModel.update(updatedPrayerEntry)
+                    dialog.dismiss()
+                }
+            }
+            dialog.show()
         }
     }
 
