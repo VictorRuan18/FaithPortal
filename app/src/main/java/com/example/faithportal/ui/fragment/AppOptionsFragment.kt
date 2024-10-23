@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import com.example.faithportal.FirstFragment
-import com.example.faithportal.FourthFragment
 import com.example.faithportal.R
-import com.example.faithportal.SecondFragment
+import com.example.faithportal.ui.activity.BibleVerseActivity
+import com.example.faithportal.ui.activity.ChurchLocatorActivity
 import com.example.faithportal.ui.activity.PrayerJournalActivity
+import com.example.faithportal.ui.activity.WorshipMusicActivity
 
 class AppOptionsFragment : Fragment(), View.OnClickListener {
 
@@ -22,14 +22,14 @@ class AppOptionsFragment : Fragment(), View.OnClickListener {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_app_options, container, false)
 
-        val btnNewGame: Button = v.findViewById(R.id.button_Fragment1)
-        btnNewGame.setOnClickListener(this)
-        val btnAudio: Button = v.findViewById(R.id.button_Fragment2)
-        btnAudio.setOnClickListener(this)
-        val btnVideo: Button = v.findViewById(R.id.button_prayerJournal)
-        btnVideo.setOnClickListener(this)
-        val btnImage: Button = v.findViewById(R.id.button_Fragment4)
-        btnImage.setOnClickListener(this)
+        val btnBibleVerse: Button = v.findViewById(R.id.button_bibleVerse)
+        btnBibleVerse.setOnClickListener(this)
+        val btnWorshipMusic: Button = v.findViewById(R.id.button_worshipMusic)
+        btnWorshipMusic.setOnClickListener(this)
+        val btnPrayerJournal: Button = v.findViewById(R.id.button_prayerJournal)
+        btnPrayerJournal.setOnClickListener(this)
+        val btnChurchLocator: Button = v.findViewById(R.id.button_churchLocator)
+        btnChurchLocator.setOnClickListener(this)
 
         return v
     }
@@ -37,16 +37,16 @@ class AppOptionsFragment : Fragment(), View.OnClickListener {
     override fun onClick(view: View) {
         val activity = requireActivity()
         when (view.id) {
-            R.id.button_Fragment1 -> startActivity(
+            R.id.button_bibleVerse -> startActivity(
                 Intent(
                     activity.applicationContext,
-                    FirstFragment::class.java
+                    BibleVerseActivity::class.java
                 )
             )
-            R.id.button_Fragment2 -> startActivity(
+            R.id.button_worshipMusic -> startActivity(
                 Intent(
                     activity.applicationContext,
-                    SecondFragment::class.java
+                    WorshipMusicActivity::class.java
                 )
             )
             R.id.button_prayerJournal -> startActivity(
@@ -55,10 +55,10 @@ class AppOptionsFragment : Fragment(), View.OnClickListener {
                     PrayerJournalActivity::class.java
                 )
             )
-            R.id.button_Fragment4 -> startActivity(
+            R.id.button_churchLocator -> startActivity(
                 Intent(
                     activity.applicationContext,
-                    FourthFragment::class.java
+                    ChurchLocatorActivity::class.java
                 )
             )
         }

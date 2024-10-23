@@ -1,4 +1,4 @@
-package com.example.faithportal;
+package com.example.faithportal.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,15 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FirstFragment extends Fragment {
+import com.example.faithportal.R;
 
-    private static final String TAG = "FirstFragment";
+public class BibleVerseFragment extends Fragment {
 
-    public FirstFragment() {
+    private static final String TAG = "BibleVerseFragment";
+
+    public BibleVerseFragment() {
     }
 
-    public static FirstFragment newInstance(String param1, String param2) {
-        FirstFragment fragment = new FirstFragment();
+    public static BibleVerseFragment newInstance(String param1, String param2) {
+        BibleVerseFragment fragment = new BibleVerseFragment();
         Bundle args = new Bundle();
         args.putString("param1", param1);
         args.putString("param2", param2);
@@ -37,7 +39,7 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        return inflater.inflate(R.layout.fragment_bible_verse, container, false);
     }
 
     @Override

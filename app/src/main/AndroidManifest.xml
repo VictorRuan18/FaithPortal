@@ -19,6 +19,21 @@
             android:label="@string/title_activity_prayer_journal"
             android:theme="@style/Theme.FaithPortal" />
         <activity
+            android:name=".ui.activity.BibleVerseActivity"
+            android:parentActivityName=".ui.activity.AppOptionsActivity"
+            android:label="@string/title_activity_bible_verse"
+            android:theme="@style/Theme.FaithPortal" />
+        <activity
+            android:name=".ui.activity.ChurchLocatorActivity"
+            android:parentActivityName=".ui.activity.AppOptionsActivity"
+            android:label="@string/title_activity_church_locator"
+            android:theme="@style/Theme.FaithPortal" />
+        <activity
+            android:name=".ui.activity.WorshipMusicActivity"
+            android:parentActivityName=".ui.activity.AppOptionsActivity"
+            android:label="@string/title_activity_worship_music"
+            android:theme="@style/Theme.FaithPortal" />
+        <activity
             android:name=".ui.activity.AppOptionsActivity"
             android:exported="true" >
             <intent-filter>

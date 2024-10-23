@@ -35,7 +35,7 @@ class PrayerJournalFragment : Fragment() {
     private var prayerIdCounter = 2
 
     companion object {
-        private const val TAG = "ThirdFragment"
+        private const val TAG = "PrayerJournalFragment"
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

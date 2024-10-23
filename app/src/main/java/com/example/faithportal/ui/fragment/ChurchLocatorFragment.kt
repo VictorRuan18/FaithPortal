@@ -1,25 +1,26 @@
-package com.example.faithportal
+package com.example.faithportal.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.faithportal.R
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class SecondFragment : Fragment() {
+class ChurchLocatorFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
     companion object {
-        private const val TAG = "SecondFragment"
+        private const val TAG = "ChurchLocatorFragment"
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SecondFragment().apply {
+            ChurchLocatorFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -41,7 +42,7 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "onCreateView")
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        return inflater.inflate(R.layout.fragment_church_locator, container, false)
     }
 
     override fun onStart() {

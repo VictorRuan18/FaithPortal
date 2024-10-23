@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_prayer_journal">Prayer Journal</string>
+    <string name="title_activity_bible_verse">Bible Verse</string>
+    <string name="title_activity_church_locator">Church Locator</string>
+    <string name="title_activity_worship_music">Worship Music</string>
 </resources>

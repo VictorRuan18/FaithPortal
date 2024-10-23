@@ -1,4 +1,4 @@
-package com.example.faithportal
+package com.example.faithportal.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.faithportal.R
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class FourthFragment : Fragment() {
+class WorshipMusicFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
     companion object {
-        private const val TAG = "FourthFragment"
+        private const val TAG = "SecondFragment"
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FourthFragment().apply {
+            WorshipMusicFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -41,7 +42,7 @@ class FourthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "onCreateView")
-        return inflater.inflate(R.layout.fragment_fourth, container, false)
+        return inflater.inflate(R.layout.fragment_worship_music, container, false)
     }
 
     override fun onStart() {
