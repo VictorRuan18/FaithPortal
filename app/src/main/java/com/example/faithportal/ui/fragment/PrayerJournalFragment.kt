@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,9 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.faithportal.Model.PrayerEntry
-import com.example.faithportal.Model.ViewModel.PrayerJournalViewModel
+import com.example.faithportal.data.Model.PrayerEntry
 import com.example.faithportal.R
+import com.example.faithportal.data.ViewModel.PrayerJournalViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

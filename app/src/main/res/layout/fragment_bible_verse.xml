@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- res/layout/fragment_bible_verse.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.BibleVerseFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/text_view_verse"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bible Verse"
-        android:textSize="30sp"
-        android:id="@+id/textViewBibleVerse"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="18sp"
+        android:text="Bible verse will be displayed here" />
+</LinearLayout>

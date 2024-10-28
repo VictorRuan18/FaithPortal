@@ -1,4 +1,4 @@
-package com.example.faithportal.Model;
+package com.example.faithportal.data.Model;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;

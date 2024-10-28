@@ -1,11 +1,11 @@
-package com.example.faithportal.Model.ViewModel
+package com.example.faithportal.data.ViewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.faithportal.Model.PrayerEntry
-import com.example.faithportal.Model.PrayerEntryDao
-import com.example.faithportal.Model.PrayerEntryDatabase
+import com.example.faithportal.data.Model.PrayerEntry
+import com.example.faithportal.data.Model.PrayerEntryDao
+import com.example.faithportal.data.Model.PrayerEntryDatabase
 
 class PrayerJournalViewModel(application: Application) : AndroidViewModel(application) {
     private val prayerEntryDao: PrayerEntryDao

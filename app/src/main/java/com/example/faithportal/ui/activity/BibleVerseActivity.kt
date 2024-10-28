@@ -22,13 +22,13 @@ class BibleVerseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutResId())
+        setContentView(R.layout.activity_fragment)
 
         val fm = supportFragmentManager
         var fragment = fm.findFragmentById(R.id.fragment_container)
 
         if (fragment == null) {
-            fragment = createFragment()
+            fragment = BibleVerseFragment()
             fm.beginTransaction()
                 .add(R.id.fragment_container, fragment)
                 .commit()

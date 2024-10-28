@@ -1,4 +1,4 @@
-package com.example.faithportal.Model;
+package com.example.faithportal.data.Model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

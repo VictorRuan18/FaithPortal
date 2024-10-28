@@ -2,44 +2,43 @@ package com.example.faithportal.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.example.faithportal.R;
+import com.example.faithportal.viewmodel.BibleVerseViewModel;
 
 public class BibleVerseFragment extends Fragment {
 
     private static final String TAG = "BibleVerseFragment";
+    private BibleVerseViewModel viewModel;
+    private TextView textViewVerse;
 
     public BibleVerseFragment() {
-    }
-
-    public static BibleVerseFragment newInstance(String param1, String param2) {
-        BibleVerseFragment fragment = new BibleVerseFragment();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
+        // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
-        if (getArguments() != null) {
-            String mParam1 = getArguments().getString("param1");
-            String mParam2 = getArguments().getString("param2");
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_bible_verse, container, false);
+        textViewVerse = view.findViewById(R.id.text_view_verse);
+        return view;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_bible_verse, container, false);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(BibleVerseViewModel.class);
+
+        viewModel.getBibleVerse().observe(getViewLifecycleOwner(), bibleVerse -> {
+            textViewVerse.setText(bibleVerse.getBook() + " " + bibleVerse.getChapter() + ":" + bibleVerse.getVerse() + " - " + bibleVerse.getText());
+        });
+
+        // Example call to fetch a Bible verse
+        viewModel.getBibleVerse("John", 3, 16);
     }
 
     @Override
