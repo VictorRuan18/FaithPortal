@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import com.example.faithportal.R
 
@@ -42,7 +44,15 @@ class WorshipMusicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "onCreateView")
-        return inflater.inflate(R.layout.fragment_worship_music, container, false)
+        val v = inflater.inflate(R.layout.fragment_worship_music, container, false)
+
+        val webView: WebView = v.findViewById(R.id.webView)
+        val video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/2pzKrCkyC1E?si=Av3yn2ste6VKBXGa\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        webView.loadData(video, "text/html", "utf-8")
+        webView.settings.javaScriptEnabled = true
+        webView.webChromeClient = WebChromeClient()
+
+        return v
     }
 
     override fun onStart() {
