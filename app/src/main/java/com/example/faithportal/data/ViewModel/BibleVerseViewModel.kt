@@ -9,9 +9,9 @@ class BibleVerseViewModel : ViewModel() {
     private val repository = BibleRepository()
     val bibleVerse = repository.bibleVerse
 
-    fun getBibleVerse(book: String, chapter: Int, verse: Int) {
+    fun getBibleVerse(version: String, book: String, chapter: Int, verse: Int) {
         viewModelScope.launch {
-            repository.fetchBibleVerse(book, chapter, verse)
+            repository.fetchBibleVerse(version, book, chapter, verse)
         }
     }
 
