@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.faithportal.R;
@@ -29,16 +31,19 @@ public class BibleVerseFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(BibleVerseViewModel.class);
 
         viewModel.getBibleVerse().observe(getViewLifecycleOwner(), bibleVerse -> {
-            textViewVerse.setText(bibleVerse.getBook() + " " + bibleVerse.getChapter() + ":" + bibleVerse.getVerse() + " - " + bibleVerse.getText());
+            if (bibleVerse != null) {
+                String verseText = getString(R.string.bible_verse_format, bibleVerse.getBook(), bibleVerse.getChapter(), bibleVerse.getVerse(),bibleVerse.getText());
+                textViewVerse.setText(verseText);
+            } else {
+                textViewVerse.setText(R.string.no_verse_found);
+            }
         });
-
-        // Example call to fetch a Bible verse
-        viewModel.getBibleVerse("en-asv", "genesis", 1, 1);
+        viewModel.getRandomBibleVerse();
     }
 
     @Override

@@ -6,4 +6,6 @@
     <string name="title_activity_bible_verse">Bible Verse</string>
     <string name="title_activity_church_locator">Church Locator</string>
     <string name="title_activity_worship_music">Worship Music</string>
+    <string name="bible_verse_format">%1$s %2$d:%3$d - %4$s</string>
+    <string name="no_verse_found">No verse found</string>
 </resources>
