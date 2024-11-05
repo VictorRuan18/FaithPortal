@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class BibleVerseFragment extends Fragment {
     private static final String TAG = "BibleVerseFragment";
     private BibleVerseViewModel viewModel;
     private TextView textViewVerse;
+    private Button buttonGenerateNewVerse;
 
     public BibleVerseFragment() {
         // Required empty public constructor
@@ -27,6 +29,7 @@ public class BibleVerseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bible_verse, container, false);
         textViewVerse = view.findViewById(R.id.text_view_verse);
+        buttonGenerateNewVerse = view.findViewById(R.id.button_generate_new_verse);
         return view;
     }
 
@@ -37,12 +40,15 @@ public class BibleVerseFragment extends Fragment {
 
         viewModel.getBibleVerse().observe(getViewLifecycleOwner(), bibleVerse -> {
             if (bibleVerse != null) {
-                String verseText = getString(R.string.bible_verse_format, bibleVerse.getBook(), bibleVerse.getChapter(), bibleVerse.getVerse(),bibleVerse.getText());
+                String verseText = getString(R.string.bible_verse_format, bibleVerse.getBook(), bibleVerse.getChapter(), bibleVerse.getVerse(), bibleVerse.getText());
                 textViewVerse.setText(verseText);
             } else {
                 textViewVerse.setText(R.string.no_verse_found);
             }
         });
+
+        buttonGenerateNewVerse.setOnClickListener(v -> viewModel.getRandomBibleVerse());
+
         viewModel.getRandomBibleVerse();
     }
 
