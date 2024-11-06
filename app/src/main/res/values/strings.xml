@@ -8,4 +8,5 @@
     <string name="title_activity_worship_music">Worship Music</string>
     <string name="bible_verse_format">%1$s %2$d:%3$d - %4$s</string>
     <string name="no_verse_found">No verse found</string>
+    <string name="google_maps_key">AIzaSyD_yA5OOFMtOp5x2qP_mp79AaSAyZeVd-M</string>
 </resources>

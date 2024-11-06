@@ -16,6 +16,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.faithportal.R;
+import com.example.faithportal.data.repository.GooglePlacesService;
+import com.example.faithportal.data.repository.PlaceResult;
+import com.example.faithportal.data.repository.PlacesResponse;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -26,8 +30,27 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesStatusCodes;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.model.Place;
+
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallback {
 
@@ -36,6 +59,7 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
+    private PlacesClient placesClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +71,11 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
                 Log.e(TAG, "Location permission denied");
             }
         });
+
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), getString(R.string.google_maps_key));
+        }
+        placesClient = Places.createClient(requireContext());
     }
 
     @Override
@@ -67,7 +96,11 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
             return;
         }
         googleMap.setMyLocationEnabled(true);
-        startLocationUpdates();
+        googleMap.setMinZoomPreference(1.0f);
+        googleMap.setMaxZoomPreference(21.0f);
+        LatLng testLocation = new LatLng(40.006, -83.016210);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(testLocation, 15));
+        findNearbyChurches(testLocation);
     }
 
     private void requestLocationPermissions() {
@@ -96,10 +129,10 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
             }
             for (Location location : locationResult.getLocations()) {
                 if (location != null) {
-                    Log.d(TAG, "Location received: " + location.toString());
+                    Log.d(TAG, "Location received: " + location);
                     LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
-                    addChurchMarkers();
+                    findNearbyChurches(currentLocation);
                     break;
                 } else {
                     Log.e(TAG, "Location is null");
@@ -108,11 +141,52 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         }
     };
 
-    private void addChurchMarkers() {
-        LatLng church1 = new LatLng(-34.0, 151.0);
-        googleMap.addMarker(new MarkerOptions().position(church1).title("Church 1"));
-        LatLng church2 = new LatLng(-34.1, 151.1);
-        googleMap.addMarker(new MarkerOptions().position(church2).title("Church 2"));
+    private void findNearbyChurches(LatLng currentLocation) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            List<PlaceResult> results = fetchNearbyChurches(currentLocation);
+            requireActivity().runOnUiThread(() -> {
+                if (results != null) {
+                    for (PlaceResult result : results) {
+                        LatLng placeLatLng = new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng());
+                        googleMap.addMarker(new MarkerOptions()
+                                .position(placeLatLng)
+                                .title(result.getName())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); // Red color
+                    }
+                }
+            });
+        });
+    }
+
+    private List<PlaceResult> fetchNearbyChurches(LatLng currentLocation) {
+        String location = currentLocation.latitude + "," + currentLocation.longitude;
+        String apiKey = getString(R.string.google_maps_key);
+        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+                "?location=" + location +
+                "&radius=5000" +  // 5000 meters
+                "&type=church" +
+                "&key=" + apiKey;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://maps.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GooglePlacesService service = retrofit.create(GooglePlacesService.class);
+        Call<PlacesResponse> call = service.getNearbyPlaces(url);
+
+        try {
+            Response<PlacesResponse> response = call.execute();
+            if (response.isSuccessful() && response.body() != null) {
+                return response.body().getResults();
+            } else {
+                Log.e(TAG, "Response not successful or body is null");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Request failed", e);
+        }
+        return null;
     }
 
     @Override

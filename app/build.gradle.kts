@@ -99,6 +99,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
-    implementation("com.google.android.gms:play-services-maps:18.0.2")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation(libs.google.play.services.maps)
+    implementation(libs.gms.play.services.location)
+    implementation (libs.google.play.services.maps)
+    implementation (libs.gms.play.services.location)
+    implementation (libs.places)
+    implementation(libs.google.play.services.maps)
 }
