@@ -14,12 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.faithportal.R;
 import com.example.faithportal.data.repository.GooglePlacesService;
 import com.example.faithportal.data.repository.PlaceResult;
 import com.example.faithportal.data.repository.PlacesResponse;
-import com.google.android.gms.common.api.ApiException;
+import com.example.faithportal.ui.ChurchListAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -35,22 +37,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
-import com.google.android.libraries.places.api.net.PlacesStatusCodes;
-import com.google.android.libraries.places.api.model.PlaceLikelihood;
-import com.google.android.libraries.places.api.model.Place;
 
-import java.util.Arrays;
+
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallback {
 
@@ -60,6 +56,8 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private PlacesClient placesClient;
+    private RecyclerView recyclerView;
+    private ChurchListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +83,9 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         return view;
     }
 
@@ -146,14 +147,23 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         executor.execute(() -> {
             List<PlaceResult> results = fetchNearbyChurches(currentLocation);
             requireActivity().runOnUiThread(() -> {
-                if (results != null) {
+                if (results != null && !results.isEmpty()) {
                     for (PlaceResult result : results) {
                         LatLng placeLatLng = new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng());
+                        result.setDistance(calculateDistance(currentLocation, placeLatLng)); // Set distance
                         googleMap.addMarker(new MarkerOptions()
                                 .position(placeLatLng)
                                 .title(result.getName())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); // Red color
                     }
+                    if (adapter == null) {
+                        adapter = new ChurchListAdapter(requireContext(), results);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.updateData(results);
+                    }
+                } else {
+                    Log.e(TAG, "No results found or results are empty");
                 }
             });
         });
@@ -187,6 +197,12 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
             Log.e(TAG, "Request failed", e);
         }
         return null;
+    }
+
+    private double calculateDistance(LatLng start, LatLng end) {
+        float[] results = new float[1];
+        Location.distanceBetween(start.latitude, start.longitude, end.latitude, end.longitude, results);
+        return results[0] / 1000; // Convert meters to kilometers
     }
 
     @Override
