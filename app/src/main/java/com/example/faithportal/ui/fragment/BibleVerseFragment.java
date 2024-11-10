@@ -10,16 +10,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.faithportal.R;
 import com.example.faithportal.viewmodel.BibleVerseViewModel;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 
 public class BibleVerseFragment extends Fragment {
 
     private static final String TAG = "BibleVerseFragment";
+    private static final String PREFS_NAME = "SavedVersesPrefs";
+    private static final String KEY_SAVED_VERSES = "saved_verses";
     private BibleVerseViewModel viewModel;
     private TextView textViewVerse;
     private Button buttonGenerateNewVerse;
+    private List<String> savedVerses = new ArrayList<>();
+    private Button buttonSaveVerse;
+    private Button buttonViewSavedVerses;
 
     public BibleVerseFragment() {
         // Required empty public constructor
@@ -30,6 +45,9 @@ public class BibleVerseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bible_verse, container, false);
         textViewVerse = view.findViewById(R.id.text_view_verse);
         buttonGenerateNewVerse = view.findViewById(R.id.button_generate_new_verse);
+        buttonSaveVerse = view.findViewById(R.id.button_save_verse);
+        buttonViewSavedVerses = view.findViewById(R.id.button_view_saved_verses);
+        loadSavedVerses();
         return view;
     }
 
@@ -48,37 +66,36 @@ public class BibleVerseFragment extends Fragment {
         });
 
         buttonGenerateNewVerse.setOnClickListener(v -> viewModel.getRandomBibleVerse());
+        buttonSaveVerse.setOnClickListener(v -> {
+            String currentVerse = textViewVerse.getText().toString();
+            if (!currentVerse.isEmpty()) {
+                savedVerses.add(currentVerse);
+                saveVerses();
+                Log.d(TAG, "Verse saved: " + currentVerse);
+            }
+        });
+
+        buttonViewSavedVerses.setOnClickListener(v -> {
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, new SavedVersesFragment(savedVerses));
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
 
         viewModel.getRandomBibleVerse();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
+    private void saveVerses() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet(KEY_SAVED_VERSES, new HashSet<>(savedVerses));
+        editor.apply();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
+    private void loadSavedVerses() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        Set<String> savedSet = sharedPreferences.getStringSet(KEY_SAVED_VERSES, new HashSet<>());
+        savedVerses.clear();
+        savedVerses.addAll(savedSet);
     }
 }

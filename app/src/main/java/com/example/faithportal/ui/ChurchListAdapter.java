@@ -15,15 +15,18 @@ import com.example.faithportal.R;
 import com.example.faithportal.data.repository.PlaceResult;
 
 import java.util.List;
+import java.util.Comparator;
+import java.util.Locale;
 
 public class ChurchListAdapter extends RecyclerView.Adapter<ChurchListAdapter.ChurchViewHolder> {
 
     private List<PlaceResult> churchList;
-    private Context context;
+    private final Context context;
 
     public ChurchListAdapter(Context context, List<PlaceResult> churchList) {
         this.context = context;
         this.churchList = churchList;
+        sortChurchListByDistance();
     }
 
     @NonNull
@@ -37,7 +40,7 @@ public class ChurchListAdapter extends RecyclerView.Adapter<ChurchListAdapter.Ch
     public void onBindViewHolder(@NonNull ChurchViewHolder holder, int position) {
         PlaceResult church = churchList.get(position);
         holder.nameTextView.setText(church.getName());
-        holder.addressTextView.setText(String.format("%.2f km", church.getDistance())); // Display the distance
+        holder.addressTextView.setText(String.format(Locale.getDefault(), "%.2f km", church.getDistance())); // Display the distance
         holder.addressTextView.setVisibility(View.VISIBLE); // Ensure the address TextView is visible
 
         holder.itemView.setOnClickListener(v -> {
@@ -55,7 +58,12 @@ public class ChurchListAdapter extends RecyclerView.Adapter<ChurchListAdapter.Ch
 
     public void updateData(List<PlaceResult> newChurchList) {
         this.churchList = newChurchList;
+        sortChurchListByDistance();
         notifyDataSetChanged();
+    }
+
+    private void sortChurchListByDistance() {
+        churchList.sort(Comparator.comparingDouble(PlaceResult::getDistance));
     }
 
     public static class ChurchViewHolder extends RecyclerView.ViewHolder {

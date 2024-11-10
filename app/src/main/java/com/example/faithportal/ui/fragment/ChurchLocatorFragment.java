@@ -38,7 +38,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,9 +54,9 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<String> requestPermissionLauncher;
-    private PlacesClient placesClient;
     private RecyclerView recyclerView;
     private ChurchListAdapter adapter;
+    private boolean isInitialLocationUpdate = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,6 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         if (!Places.isInitialized()) {
             Places.initialize(requireContext(), getString(R.string.google_maps_key));
         }
-        placesClient = Places.createClient(requireContext());
     }
 
     @Override
@@ -99,9 +97,7 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         googleMap.setMyLocationEnabled(true);
         googleMap.setMinZoomPreference(1.0f);
         googleMap.setMaxZoomPreference(21.0f);
-        LatLng testLocation = new LatLng(40.006, -83.016210);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(testLocation, 15));
-        findNearbyChurches(testLocation);
+        startLocationUpdates();
     }
 
     private void requestLocationPermissions() {
@@ -109,7 +105,7 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
     }
 
     private void startLocationUpdates() {
-        com.google.android.gms.location.LocationRequest locationRequest = com.google.android.gms.location.LocationRequest.create()
+        LocationRequest locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10000)
                 .setFastestInterval(5000);
@@ -123,16 +119,15 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
 
     private final LocationCallback locationCallback = new LocationCallback() {
         @Override
-        public void onLocationResult(LocationResult locationResult) {
-            if (locationResult == null) {
-                Log.e(TAG, "Location result is null");
-                return;
-            }
+        public void onLocationResult(@NonNull LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
                 if (location != null) {
                     Log.d(TAG, "Location received: " + location);
                     LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                    if (isInitialLocationUpdate) {
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                        isInitialLocationUpdate = false;
+                    }
                     findNearbyChurches(currentLocation);
                     break;
                 } else {
