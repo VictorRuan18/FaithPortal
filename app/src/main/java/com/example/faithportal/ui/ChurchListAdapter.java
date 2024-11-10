@@ -40,7 +40,7 @@ public class ChurchListAdapter extends RecyclerView.Adapter<ChurchListAdapter.Ch
     public void onBindViewHolder(@NonNull ChurchViewHolder holder, int position) {
         PlaceResult church = churchList.get(position);
         holder.nameTextView.setText(church.getName());
-        holder.addressTextView.setText(String.format(Locale.getDefault(), "%.2f km", church.getDistance())); // Display the distance
+        //holder.addressTextView.setText(String.format(Locale.getDefault(), "%.2f km", church.getDistance())); // Display the distance
         holder.addressTextView.setVisibility(View.VISIBLE); // Ensure the address TextView is visible
 
         holder.itemView.setOnClickListener(v -> {

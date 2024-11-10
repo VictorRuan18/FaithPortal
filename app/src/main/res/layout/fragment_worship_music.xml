@@ -6,20 +6,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.WorshipMusicFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Worship Music"
-        android:textSize="30sp"
-        android:id="@+id/textViewWorshipSong"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <WebView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="250sp"
-        android:id="@+id/webView"/>
+        android:id="@+id/imageView"/>
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="40sp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <Button
+        android:id="@+id/button_spotifyLink"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Spotify"
+        android:backgroundTint="@color/green"
+        app:layout_constraintBottom_toTopOf="@+id/button_newMusicButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/button_newMusicButton"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="New Random Music"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
