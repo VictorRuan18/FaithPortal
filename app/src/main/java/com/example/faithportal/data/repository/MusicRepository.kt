@@ -19,8 +19,6 @@ class MusicRepository {
     private var accessToken: String? = null
 
     init {
-        fetchAccessToken()
-
         val client = getOkHttpClientWithAuth()
 
         val retrofit = Retrofit.Builder()
@@ -55,7 +53,6 @@ class MusicRepository {
         }
     }
 
-    // Function to get a valid access token (you can replace this with your preferred authentication method)
     private fun fetchAccessToken() {
         val formBody = FormBody.Builder()
             .add("grant_type", "client_credentials")
@@ -87,7 +84,6 @@ class MusicRepository {
         })
     }
 
-    // Function to extract the access token from the API response
     private fun parseAccessToken(responseBody: String?): String? {
         return try {
             val jsonObject = JSONObject(responseBody)
@@ -106,7 +102,6 @@ class MusicRepository {
         builder.addInterceptor { chain ->
             val originalRequest = chain.request()
 
-            // If access token is available, add Authorization header
             val requestBuilder = if (accessToken != null) {
                 originalRequest.newBuilder()
                     .addHeader("Authorization", "Bearer $accessToken")

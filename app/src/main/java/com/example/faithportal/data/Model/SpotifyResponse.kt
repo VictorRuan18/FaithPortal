@@ -15,7 +15,7 @@ data class TrackObject (
     @SerializedName("artists") var artists: List<SimplifiedArtistObject>,
     @SerializedName("external_urls") var external_urls: Link,
     @SerializedName("name") var name: String,
-    @SerializedName("preview_url") var preview_url: String
+    @SerializedName("preview_url") var preview_url: String?
 )
 
 data class Album(

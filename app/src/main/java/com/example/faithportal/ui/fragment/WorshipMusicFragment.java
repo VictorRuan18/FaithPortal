@@ -1,6 +1,8 @@
 package com.example.faithportal.ui.fragment;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,17 +23,20 @@ import com.example.faithportal.model.SimplifiedArtistObject;
 import com.example.faithportal.model.TrackObject;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class WorshipMusicFragment extends Fragment {
     private static final String TAG = "WorshipMusicFragment";
 
     private WorshipMusicViewModel viewModel;
-    private ImageView musicVideo;
+    private ImageView albumImage;
     private TextView titleText;
     private Button buttonSpotify;
     private Button buttonNewMusic;
+    private Button buttonPlay;
+    private Button buttonPause;
+    private MediaPlayer mediaPlayer;
 
     public WorshipMusicFragment() {
         // Required empty public constructor
@@ -40,8 +46,12 @@ public class WorshipMusicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_worship_music, container, false);
 
-        musicVideo = view.findViewById(R.id.imageView);
+        albumImage = view.findViewById(R.id.imageView);
         titleText = view.findViewById(R.id.text_view_title);
+        buttonPlay = view.findViewById(R.id.button_playSample);
+        buttonPause = view.findViewById(R.id.button_pauseSample);
+        buttonPlay.setEnabled(false);
+        buttonPause.setEnabled(false);
         buttonSpotify = view.findViewById(R.id.button_spotifyLink);
         buttonNewMusic = view.findViewById(R.id.button_newMusicButton);
         return view;
@@ -53,15 +63,18 @@ public class WorshipMusicFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(WorshipMusicViewModel.class);
 
-        AtomicReference<String> linkUrl = new AtomicReference<>("");
-        AtomicReference<String> imageUrl = new AtomicReference<>("");
-
         viewModel.getWorshipMusic().observe(getViewLifecycleOwner(), worshipMusic -> {
             if (worshipMusic != null) {
-                List<TrackObject> items = worshipMusic.getTracks().getItems();
-                List<SimplifiedArtistObject> artists = items.get(0).getArtists();
+                TrackObject item = worshipMusic.getTracks().getItems().get(0);
+
+                // Set image from api
+                String imageUrl = item.getAlbum().getImages().get(0).getUrl();
+                Picasso.get().load(imageUrl).into(albumImage);
+
+                // Set title from api
+                List<SimplifiedArtistObject> artists = item.getArtists();
                 StringBuilder musicTitle = new StringBuilder();
-                musicTitle.append(items.get(0).getName());
+                musicTitle.append(item.getName());
                 musicTitle.append(" - ");
                 for (int i = 0; i < artists.size(); i++) {
                     musicTitle.append(artists.get(i).getName());
@@ -70,20 +83,69 @@ public class WorshipMusicFragment extends Fragment {
                     }
                 }
                 titleText.setText(musicTitle.toString());
-                linkUrl.set(items.get(0).getExternal_urls().getSpotify());
-                imageUrl.set(items.get(0).getAlbum().getImages().get(0).getUrl());
-                Log.d(TAG, String.valueOf(imageUrl));
+
+                // Set preview if it exists
+                String previewUrl = item.getPreview_url();
+                if (previewUrl != null) {
+                    buttonPlay.setEnabled(true);
+                    buttonPlay.setOnClickListener(v -> playAudio(previewUrl));
+                    buttonPause.setOnClickListener(v -> pauseAudio());
+                } else {
+                    buttonPlay.setEnabled(false);
+                    buttonPause.setEnabled(false);
+                    Toast.makeText(getActivity(), "This song has no sample", Toast.LENGTH_LONG).show();
+                }
+
+                // Set a link to the music from api
+                String linkUrl = item.getExternal_urls().getSpotify();
+                buttonSpotify.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl))));
             } else {
                 titleText.setText("No songs found");
             }
         });
 
-
-        buttonNewMusic.setOnClickListener(v -> viewModel.retrieveWorshipMusic());
-
-        buttonSpotify.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(linkUrl)))));
+        buttonNewMusic.setOnClickListener(v -> {
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                pauseAudio();
+            }
+            viewModel.retrieveWorshipMusic();
+        });
 
         viewModel.retrieveWorshipMusic();
+    }
+
+    private void playAudio(String audioUrl) {
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        buttonPause.setEnabled(true);
+        buttonPlay.setEnabled(false);
+        try {
+            mediaPlayer.setDataSource(audioUrl);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(mp -> {
+                buttonPlay.setEnabled(true);
+                buttonPause.setEnabled(false);
+                Toast.makeText(getActivity(), "Sample finished playing", Toast.LENGTH_SHORT).show();
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(getActivity(), "Sample Started playing", Toast.LENGTH_LONG).show();
+    }
+
+    private void pauseAudio() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            Toast.makeText(getActivity(), "Sample paused", Toast.LENGTH_LONG).show();
+            buttonPause.setEnabled(false);
+            buttonPlay.setEnabled(true);
+        } else {
+            Toast.makeText(getActivity(), "Sample has not played", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -102,6 +164,9 @@ public class WorshipMusicFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
+        if (mediaPlayer != null) {
+            pauseAudio();
+        }
     }
 
     @Override

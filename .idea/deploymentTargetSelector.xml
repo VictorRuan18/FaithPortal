@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="FaithPortal">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-10T18:27:16.475773600Z">
+        <DropdownSelection timestamp="2024-11-11T19:43:21.749050600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\joong\.android\avd\Medium_Phone_API_35.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=943X1YL67" />
             </handle>
           </Target>
         </DropdownSelection>
