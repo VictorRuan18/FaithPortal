@@ -48,6 +48,7 @@ public class WorshipMusicFragment extends Fragment {
 
         albumImage = view.findViewById(R.id.imageView);
         titleText = view.findViewById(R.id.text_view_title);
+        titleText.setText("Press the \'New Random Music\' button to begin");
         buttonPlay = view.findViewById(R.id.button_playSample);
         buttonPause = view.findViewById(R.id.button_pauseSample);
         buttonPlay.setEnabled(false);
