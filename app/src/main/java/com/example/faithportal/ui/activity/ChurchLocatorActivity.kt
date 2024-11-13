@@ -5,7 +5,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.faithportal.R
-import com.example.faithportal.ui.fragment.BibleVerseFragment
 import com.example.faithportal.ui.fragment.ChurchLocatorFragment
 
 class ChurchLocatorActivity : AppCompatActivity() {

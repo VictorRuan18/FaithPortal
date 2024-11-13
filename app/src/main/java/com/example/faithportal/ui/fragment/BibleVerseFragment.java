@@ -23,6 +23,7 @@ import java.util.Set;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 public class BibleVerseFragment extends Fragment {
 
@@ -32,7 +33,7 @@ public class BibleVerseFragment extends Fragment {
     private BibleVerseViewModel viewModel;
     private TextView textViewVerse;
     private Button buttonGenerateNewVerse;
-    private List<String> savedVerses = new ArrayList<>();
+    private final List<String> savedVerses = new ArrayList<>();
     private Button buttonSaveVerse;
     private Button buttonViewSavedVerses;
 
@@ -86,14 +87,15 @@ public class BibleVerseFragment extends Fragment {
     }
 
     private void saveVerses() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(KEY_SAVED_VERSES, new HashSet<>(savedVerses));
+        Toast.makeText(getActivity(), "Verse saved", Toast.LENGTH_LONG).show();
         editor.apply();
     }
 
     private void loadSavedVerses() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Set<String> savedSet = sharedPreferences.getStringSet(KEY_SAVED_VERSES, new HashSet<>());
         savedVerses.clear();
         savedVerses.addAll(savedSet);

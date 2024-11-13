@@ -31,7 +31,6 @@ class PrayerJournalFragment : Fragment() {
     private lateinit var buttonAddPrayer: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PrayerEntryAdapter
-    private var prayerIdCounter = 2
 
     companion object {
         private const val TAG = "PrayerJournalFragment"
@@ -134,9 +133,9 @@ class PrayerEntryAdapter(private val prayerJournalViewModel: PrayerJournalViewMo
             prayerJournalViewModel.delete(currentPrayerEntry)
         }
         holder.buttonUpdateEntry.setOnClickListener {
-            var updateView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.update_prayer_entry, null)
-            var editTextUpdatePrayer = updateView.findViewById<EditText>(R.id.edit_text_update_prayer)
-            var buttonUpdate = updateView.findViewById<Button>(R.id.button_update_prayer)
+            val updateView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.update_prayer_entry, null)
+            val editTextUpdatePrayer = updateView.findViewById<EditText>(R.id.edit_text_update_prayer)
+            val buttonUpdate = updateView.findViewById<Button>(R.id.button_update_prayer)
             editTextUpdatePrayer.setText(currentPrayerEntry.content)
 
             val dialog = androidx.appcompat.app.AlertDialog.Builder(holder.itemView.context)

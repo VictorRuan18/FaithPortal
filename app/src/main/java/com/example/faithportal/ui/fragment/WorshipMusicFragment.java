@@ -48,7 +48,8 @@ public class WorshipMusicFragment extends Fragment {
 
         albumImage = view.findViewById(R.id.imageView);
         titleText = view.findViewById(R.id.text_view_title);
-        titleText.setText("Press the \'New Random Music\' button to begin");
+        String start = "Press the 'New Random Music' button to begin";
+        titleText.setText(start);
         buttonPlay = view.findViewById(R.id.button_playSample);
         buttonPause = view.findViewById(R.id.button_pauseSample);
         buttonPlay.setEnabled(false);
@@ -101,7 +102,8 @@ public class WorshipMusicFragment extends Fragment {
                 String linkUrl = item.getExternal_urls().getSpotify();
                 buttonSpotify.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl))));
             } else {
-                titleText.setText("No songs found");
+                String error = "No songs found";
+                titleText.setText(error);
             }
         });
 
@@ -127,12 +129,10 @@ public class WorshipMusicFragment extends Fragment {
             mediaPlayer.setOnCompletionListener(mp -> {
                 buttonPlay.setEnabled(true);
                 buttonPause.setEnabled(false);
-                Toast.makeText(getActivity(), "Sample finished playing", Toast.LENGTH_SHORT).show();
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "IOException");
         }
-        Toast.makeText(getActivity(), "Sample Started playing", Toast.LENGTH_LONG).show();
     }
 
     private void pauseAudio() {
@@ -141,7 +141,6 @@ public class WorshipMusicFragment extends Fragment {
             mediaPlayer.reset();
             mediaPlayer.release();
             mediaPlayer = null;
-            Toast.makeText(getActivity(), "Sample paused", Toast.LENGTH_LONG).show();
             buttonPause.setEnabled(false);
             buttonPlay.setEnabled(true);
         } else {

@@ -1,7 +1,6 @@
 package com.example.faithportal.data.repository
 
 import android.util.Log
-import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.faithportal.model.BibleVerse
@@ -241,9 +240,9 @@ class BibleRepository {
     suspend fun fetchRandomBibleVerse() {
         val book = books.random()
         val maxChapter = chapters[book] ?: 1
-        var chapter = Random.nextInt(1, maxChapter + 1)
-        var maxVerse = verses[book]?.get(chapter - 1) ?: 1
-        var verse = Random.nextInt(1, maxVerse + 1)
+        val chapter = Random.nextInt(1, maxChapter + 1)
+        val maxVerse = verses[book]?.get(chapter - 1) ?: 1
+        val verse = Random.nextInt(1, maxVerse + 1)
 
         Log.d("BibleRepository", "Fetching random verse: $book $chapter:$verse")
         withContext(Dispatchers.IO) {

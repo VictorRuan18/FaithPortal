@@ -86,8 +86,8 @@ class MusicRepository {
 
     private fun parseAccessToken(responseBody: String?): String? {
         return try {
-            val jsonObject = JSONObject(responseBody)
-            jsonObject.getString("access_token")
+            val jsonObject = responseBody?.let { JSONObject(it) }
+            jsonObject?.getString("access_token")
         } catch (e: Exception) {
             Log.e("MusicRepository", "Failed to parse access token: ${e.message}")
             null

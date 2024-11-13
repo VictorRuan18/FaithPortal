@@ -26,7 +26,7 @@ public class SavedVersesFragment extends Fragment {
 
     private static final String PREFS_NAME = "SavedVersesPrefs";
     private static final String KEY_SAVED_VERSES = "saved_verses";
-    private List<String> savedVerses = new ArrayList<>();
+    private final List<String> savedVerses = new ArrayList<>();
 
     public SavedVersesFragment(List<String> savedVerses) {
         // Required empty public constructor
@@ -44,7 +44,7 @@ public class SavedVersesFragment extends Fragment {
     }
 
     private void loadSavedVerses() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Set<String> savedSet = sharedPreferences.getStringSet(KEY_SAVED_VERSES, new HashSet<>());
         savedVerses.clear();
         savedVerses.addAll(savedSet);
