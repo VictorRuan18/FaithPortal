@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#1db954</color>
     <color name="red">#fc3c44</color>
+    <color name="colorBibleVerseButton">#FF0000</color> <!-- Red -->
+    <color name="colorWorshipMusicButton">#1db954</color> <!-- Green -->
+    <color name="colorPrayerJournalButton">#0000FF</color> <!-- Blue -->
+    <color name="colorChurchLocatorButton">#FF6200EE</color> <!-- Yellow -->
 </resources>
