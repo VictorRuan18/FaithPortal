@@ -1,32 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_view_verse"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:text="" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/button_generate_new_verse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Generate New Verse" />
+        <TextView
+            android:id="@+id/text_view_verse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:text="" />
 
-    <Button
-        android:id="@+id/button_save_verse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Verse" />
+        <Button
+            android:id="@+id/button_generate_new_verse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Generate New Verse" />
 
-    <Button
-        android:id="@+id/button_view_saved_verses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Saved Verses" />
-</LinearLayout>
+        <Button
+            android:id="@+id/button_save_verse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Verse" />
+
+        <Button
+            android:id="@+id/button_view_saved_verses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Saved Verses" />
+    </LinearLayout>
+</ScrollView>
