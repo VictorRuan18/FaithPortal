@@ -7,7 +7,11 @@ plugins {
 android {
     namespace = "com.example.faithportal"
     compileSdk = 34
-
+    testOptions {
+        unitTests {
+            var includeAndroidResources = true
+        }
+    }
     defaultConfig {
         applicationId = "com.example.faithportal"
         minSdk = 24
@@ -62,6 +66,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.testng)
+    implementation(libs.androidx.fragment.testing)
+    implementation(libs.androidx.junit.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -107,4 +114,20 @@ dependencies {
     implementation (libs.gms.play.services.location)
     implementation (libs.places)
     implementation(libs.google.play.services.maps)
+
+    testImplementation (libs.junit)
+    testImplementation (libs.mockito.core)
+    androidTestImplementation (libs.androidx.junit.v113)
+    androidTestImplementation (libs.androidx.espresso.core.v340)
+    testImplementation (libs.mockito.inline)
+    testImplementation (libs.robolectric)
+    debugImplementation(libs.androidx.fragment.testing.v157)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:3.11.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation("org.robolectric:robolectric:4.7.3")
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 }

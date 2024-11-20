@@ -28,14 +28,14 @@ import android.widget.Toast;
 public class BibleVerseFragment extends Fragment {
 
     private static final String TAG = "BibleVerseFragment";
-    private static final String PREFS_NAME = "SavedVersesPrefs";
-    private static final String KEY_SAVED_VERSES = "saved_verses";
-    private BibleVerseViewModel viewModel;
-    private TextView textViewVerse;
-    private Button buttonGenerateNewVerse;
-    private final List<String> savedVerses = new ArrayList<>();
-    private Button buttonSaveVerse;
-    private Button buttonViewSavedVerses;
+    public static final String PREFS_NAME = "SavedVersesPrefs";
+    public static final String KEY_SAVED_VERSES = "saved_verses";
+    public BibleVerseViewModel viewModel;
+    public TextView textViewVerse;
+    public Button buttonGenerateNewVerse;
+    public final List<String> savedVerses = new ArrayList<>();
+    public Button buttonSaveVerse;
+    public Button buttonViewSavedVerses;
 
     public BibleVerseFragment() {
         // Required empty public constructor
@@ -86,7 +86,7 @@ public class BibleVerseFragment extends Fragment {
         viewModel.getRandomBibleVerse();
     }
 
-    private void saveVerses() {
+    public void saveVerses() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(KEY_SAVED_VERSES, new HashSet<>(savedVerses));
@@ -94,7 +94,7 @@ public class BibleVerseFragment extends Fragment {
         editor.apply();
     }
 
-    private void loadSavedVerses() {
+    public void loadSavedVerses() {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Set<String> savedSet = sharedPreferences.getStringSet(KEY_SAVED_VERSES, new HashSet<>());
         savedVerses.clear();

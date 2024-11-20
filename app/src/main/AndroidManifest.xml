@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FaithPortal"
         tools:targetApi="31" >
-
+        <activity android:name="androidx.fragment.app.testing.EmptyFragmentActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD_yA5OOFMtOp5x2qP_mp79AaSAyZeVd-M" />
