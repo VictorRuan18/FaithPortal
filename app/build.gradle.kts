@@ -7,11 +7,6 @@ plugins {
 android {
     namespace = "com.example.faithportal"
     compileSdk = 34
-    testOptions {
-        unitTests {
-            var includeAndroidResources = true
-        }
-    }
     defaultConfig {
         applicationId = "com.example.faithportal"
         minSdk = 24
@@ -91,7 +86,9 @@ dependencies {
     implementation("androidx.room:room-rxjava3:$room_version")
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation("androidx.room:room-guava:$room_version")
+    implementation("com.google.guava:guava:31.1-jre") {
+        exclude(group = "com.google.guava", module = "listenablefuture")
+    }
 
     // optional - Test helpers
     testImplementation("androidx.room:room-testing:$room_version")
