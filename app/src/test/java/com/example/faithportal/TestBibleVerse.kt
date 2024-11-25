@@ -31,10 +31,8 @@ class TestBibleVerse {
 
         // Observe the LiveData
         val observer = Observer<BibleVerse> { bibleVerse ->
-            if (bibleVerse != null) {
-                fetchedVerse = bibleVerse
-                latch.countDown()
-            }
+            fetchedVerse = bibleVerse
+            latch.countDown()
         }
 
         try {
@@ -94,8 +92,10 @@ class TestBibleVerse {
 
         // Mock the observer
         val observer = Observer<BibleVerse> { bibleVerse ->
-            fetchedVerse = bibleVerse
-            latch.countDown()
+            if (bibleVerse != null) {
+                fetchedVerse = bibleVerse
+                latch.countDown()
+            }
         }
 
         try {

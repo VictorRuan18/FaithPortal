@@ -2,10 +2,16 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="FaithPortal">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AppOptionsActivity">
+      <SelectionState runConfigName="InstrumentedUITestWorshipMusic">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PrayerJournalInstrumentedTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="TestWorshipMusic">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

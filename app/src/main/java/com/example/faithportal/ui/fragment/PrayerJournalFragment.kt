@@ -44,6 +44,7 @@ class PrayerJournalFragment : Fragment() {
                 }
             }
     }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart")
