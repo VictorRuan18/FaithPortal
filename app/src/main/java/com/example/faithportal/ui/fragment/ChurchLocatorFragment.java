@@ -104,10 +104,7 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
     }
 
     private void startLocationUpdates() {
-        LocationRequest locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10000)
-                .setFastestInterval(5000);
+        LocationRequest locationRequest = new LocationRequest();
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -168,7 +165,7 @@ public class ChurchLocatorFragment extends Fragment implements OnMapReadyCallbac
         String apiKey = getString(R.string.google_maps_key);
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
                 "?location=" + location +
-                "&radius=5000" +  // 5000 meters
+                "&radius=2000" +  // 5000 meters
                 "&type=church" +
                 "&key=" + apiKey;
 
